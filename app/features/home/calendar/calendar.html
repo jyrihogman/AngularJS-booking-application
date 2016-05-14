@@ -14,7 +14,8 @@
         <span class="day">Sun</span>
     </div>
     <div class="week" ng-repeat="week in $ctrl.weeks">
-        <span class="day" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }" 
-              ng-click="$ctrl.select(day)" ng-repeat="day in week.days">{{day.number}}</span>
+        <span class="day" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, 
+                selected: day.date.isSame($ctrl.selected), BeforeToday: day.date.isBefore(moment('YYYY-MM-DD'), 'day') }" 
+                ng-click="$ctrl.select(day)" ng-repeat="day in week.days">{{day.number}}</span>
     </div>
 </body>

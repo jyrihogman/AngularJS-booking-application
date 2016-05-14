@@ -12,7 +12,7 @@ span { color:#888888;
 @border-colour:#CCC;
 
 calendar { float:left; display:block; .border-box; background:white; width:300px; border:solid 1px @border-colour; margin-bottom:10px;
-    @secondary-colour:#2875C7;
+    @secondary-colour:#009933;
     @spacing:10px;
                 
     @icon-width:40px;
@@ -30,9 +30,10 @@ calendar { float:left; display:block; .border-box; background:white; width:300px
         &:first-child { border-top:none; }
         >span.day { float:left; width:100%/7; .border-box; border-left:solid 1px @border-colour; font-size:0.75em; text-align:center; .vertical-centre(30px); background:white; cursor:pointer; color:black;
             &:first-child { border-left:none; }
-            &.today { background:#E3F2FF; }
+            &.today { background:#00cc00; }
             &.different-month { color:#C0C0C0; }
-            &.selected { background:@secondary-colour; color:white; }          
+            &.selected { background:@secondary-colour; color:black; }
+            &.BeforeToday { background: grey; color:white; }          
         }
         &.names>span { color:@secondary-colour; font-weight:bold; }
     }

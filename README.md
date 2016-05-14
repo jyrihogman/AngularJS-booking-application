@@ -4,7 +4,7 @@
 Working fine.
 
 ### Selecting days
-The picked date isn't visible in the calendar as it should be. (set in home.less)
+Working fine, in the latest version you can't select days before today.
 
 ### Hardcoded reservations
 Visible on the calendar, working fine.
