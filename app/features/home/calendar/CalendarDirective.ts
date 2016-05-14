@@ -13,7 +13,7 @@ class CalendarController {
     }
     
     select(day) {
-        if (day.date.isAfter(moment(),'day')) {
+        if (day.date.isSameOrAfter(moment(),'day'))  {
             this.selected = day.date;
         }
     }
