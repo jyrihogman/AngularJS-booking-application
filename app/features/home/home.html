@@ -1,0 +1,7 @@
+<h2>Home</h2>
+<p>1. Pick a date</p>
+<p>2. Pick a time</P>
+<calendar selected="day"></calendar>
+<p> {{day.format('MMMM, YYYY')}} </p>
+<span>Available reservations for day: <b> {{day.format('dddd, MMMM Do YYYY')}}</b></span>
+<p ng-repeat="message in messages | filter:{day: day.format('YYYY-MM-DD') }">{{message.time}}</p>
