@@ -9,5 +9,5 @@ Working fine, in the latest version you can't select days before today.
 ### Hardcoded reservations
 Visible on the calendar, working fine.
 
-### Needed tweaks
-Styling, HTML & final functional tweaks needed.
+### ToDo
+Bootstrap, visual tweaking
