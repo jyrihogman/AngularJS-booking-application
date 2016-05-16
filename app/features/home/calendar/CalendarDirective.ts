@@ -1,4 +1,4 @@
-class CalendarController {
+export class CalendarController {
     weeks = [];
     day: moment.Moment;
     month: moment.Moment;
@@ -75,5 +75,3 @@ angular.module('app')
             scope: { selected: "=" }
     }
 });
-
-export {};

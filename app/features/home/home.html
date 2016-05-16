@@ -4,4 +4,18 @@
 <calendar selected="day"></calendar>
 <p> {{day.format('MMMM, YYYY')}} </p>
 <span>Available reservations for day: <b> {{day.format('dddd, MMMM Do YYYY')}}</b></span>
-<p ng-repeat="message in messages | filter:{day: day.format('YYYY-MM-DD') }">{{message.time}}</p>
+<p ng-repeat="message in home.messages | filter:{day: day.format('YYYY-MM-DD') }">{{ message.time}}</p>
+<p ng-repeat="reservation in home.reservations">{{ reservation.Time }}</p>
+<form ng-submit="submit()">
+<div class="input-group">
+  <span class="input-group-addon"><i class="fa fa-font fa-fw"></i></span>
+  <input class="form-control" type="text" placeholder="Time" ng-model="Time">
+</div>
+<div class="input-group">
+  <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+  <input class="form-control" type="text" placeholder="Date" ng-model="Date">
+</div>
+<div>
+<button class="btn btn-lg btn-primary btn-block" type="submit">Book</button>
+</div>
+</form>
