@@ -6,7 +6,7 @@ Working fine.
 ### Selecting days
 Working fine, in the latest version you can't select days before today.
 
-### Hardcoded reservations
+### Hardcoded reservations (Front-end)
 Visible on the calendar, working fine.
 
 ### ToDo
