@@ -8,8 +8,9 @@ export class HomeController {
 	Time: string;
 	Date: string;
 	
-	static $inject = ['$http'];
-	constructor ($http) {
+	static $inject = ['$http', '$scope' ];
+	constructor ($http, $scope) {
+
 		this.httpGet = $http;
 		this.httpPost = $http;
 		this.messages = [ 
@@ -34,4 +35,5 @@ export class HomeController {
 	}
 }
 
-angular.module('app').controller('HomeController', HomeController);                            
+angular.module('app').controller('HomeController', HomeController);        
+                      
