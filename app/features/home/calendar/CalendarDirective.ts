@@ -1,8 +1,9 @@
-class CalendarController {
+export class CalendarController {
     weeks = [];
     day: moment.Moment;
     month: moment.Moment;
     selected: moment.Moment;
+    
     constructor () {
         this.selected = this.removeTime(this.selected || moment());
         this.month = this.selected.clone();
@@ -41,7 +42,7 @@ class CalendarController {
         let done = false, date = start.clone(), monthIndex = date.month(), count = 0;
         while (!done) {
             this.weeks.push({ days: this.buildWeek(date.clone(), month) });
-            date.add(1, "w");
+            date.add(1, 'w');
             done = count++ > 2 && monthIndex !== date.month();
             monthIndex = date.month();
         }
@@ -51,14 +52,14 @@ class CalendarController {
         let days = [];
         for (var i = 0; i < 7; i++) {
                 days.push({
-                name: date.format("dd").substring(0, 1),
+                name: date.format('dd').substring(0, 1),
                 number: date.date(),
                 isCurrentMonth: date.month() === month.month(),
-                isToday: date.isSame(new Date(), "day"),
+                isToday: date.isSame(new Date(), 'day'),
                 date: date,
             });
             date = date.clone();
-            date.add(1, "d");
+            date.add(1, 'd');
         }
         return days;
     }   
@@ -67,13 +68,11 @@ class CalendarController {
 angular.module('app')
     .directive('calendar', () => {
     return {
-            restrict: "EA",
-            templateUrl: "features/home/calendar/calendar.html",
+            restrict: 'EA',
+            templateUrl: 'features/home/calendar/calendar.html',
             controller: CalendarController,
             controllerAs: '$ctrl',
             bindToController: true,
-            scope: { selected: "=" }
+            scope: { selected: '=' }
     }
 });
-
-export {};
