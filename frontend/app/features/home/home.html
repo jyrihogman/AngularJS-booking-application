@@ -48,15 +48,24 @@
     <div class="col-lg-6 col-lg-offset-3">
       <br></br>
         <div class="well bs-component">
-              <form class="form-horizontal">
+              <form class="form-horizontal" ng-submit="home.Submit()">
                 <fieldset>
                   <legend>Available reservations for day:<br><b>{{day.format('dddd, MMMM Do YYYY')}}</b></legend>
                     <div class="form-group">
+                    <label for="select" class="col-lg-2 control-label">Date</label>
+                    <div class="col-lg-10">
+                      <select class="form-control" id="select" ng-model="home.Date">
+                        <option value="">Choose here</option>
+                        <option> {{ day.format('YYYY-MM-DD') }}</option>
+                      </select>
+                     </div>
+                    </div>
+                    <div class="form-group">
                     <label for="select" class="col-lg-2 control-label">Time</label>
                     <div class="col-lg-10">
-                      <select class="form-control" id="select">
-                        <option>Choose here</option>
-                        <option ng-repeat="message in home.messages | filter:{day: day.format('YYYY-MM-DD') }">{{ message.time }}</option>
+                      <select class="form-control" id="select" ng-model="home.Time" > 
+                        <option value="">Choose here</option>
+                        <option ng-repeat="reservation in home.reservations">{{ reservation.Time }}</option>
                       </select>
                     </div>
                   </div>
