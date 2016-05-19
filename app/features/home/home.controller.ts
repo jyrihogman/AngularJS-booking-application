@@ -24,7 +24,7 @@ export class HomeController {
 	}
 	
 	Submit() {
-		if (this.Time) {
+		if (this.Date) {
 			let reserved = {
 				"Time": this.Time,
 				"Date": this.Date			

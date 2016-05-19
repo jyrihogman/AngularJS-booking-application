@@ -1,4 +1,4 @@
-﻿<body>
+﻿
     <div class="header">
         <i class="fa fa-angle-left" ng-click="$ctrl.previous()"></i>
         <span>{{$ctrl.month.format("MMMM, YYYY")}}</span>
@@ -18,4 +18,3 @@
                 selected: day.date.isSame($ctrl.selected), BeforeToday: day.date.isBefore(moment('YYYY-MM-DD'), 'day') }" 
                 ng-click="$ctrl.select(day)" ng-repeat="day in week.days">{{day.number}}</span>
     </div>
-</body>
