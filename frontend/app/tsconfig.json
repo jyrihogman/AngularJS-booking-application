@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "moduleResolution":"node",
+        "target":"es5",
+        "sourceMap": true,
+        "inlineSources": true,
+        "pretty": true
+    },
+    "files": [
+        "app.ts", "app.bootstrap.ts"
+    ]
+}
