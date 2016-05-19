@@ -30,7 +30,7 @@ export class HomeController {
 				"Time": this.Time,
 				"Date": this.Date			
 				}
-			this.httpPost.post('http://localhost:56368/api/reserved', reserved).success((data) => alert("Product added succesfully"))
+			this.httpPost.post('http://localhost:56368/api/reserved', reserved).success((data) => alert("Reservation added succesfully"))
 																			   .error((data) => alert("erro"));
 			}
 	}
