@@ -7,10 +7,10 @@ export class HomeController {
 	reservations: any;
 	Time: string;
 	Date: string;
+	matchPattern: RegExp;
 	
-	static $inject = ['$http', '$scope' ];
-	constructor ($http, $scope) {
-
+	static $inject = ['$http'];
+	constructor ( $http ) {
 		this.httpGet = $http;
 		this.httpPost = $http;
 		this.messages = [ 
@@ -18,6 +18,7 @@ export class HomeController {
 			{ time: "13:00", day: "2016-05-17" },
 			{ time: "15:00", day: "2016-05-20" }	
 		];
+		this.matchPattern = new RegExp("^[a-z]");
 
 		this.httpGet.get('http://localhost:56368/api/reservation').success((data) => this.reservations = data)
 															  						   .error((data) => alert("erro"));

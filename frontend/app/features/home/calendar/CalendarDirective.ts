@@ -11,10 +11,11 @@ export class CalendarController {
         start.date(-6); // 1
         this.removeTime(start.day(1)); // 0
         this.buildMonth(start, this.month);
+
     }
     
-    select(day) {
-        if (day.date.isSameOrAfter(moment(),'day'))  {
+    select(day) {     
+        if (day.date.format('dddd') != "Saturday" && day.date.format('dddd') != "Sunday") {
             this.selected = day.date;
         }
     }
