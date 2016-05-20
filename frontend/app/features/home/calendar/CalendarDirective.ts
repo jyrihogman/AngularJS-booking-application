@@ -15,7 +15,7 @@ export class CalendarController {
     }
     
     select(day) {     
-        if (day.date.format('dddd') != "Saturday" && day.date.format('dddd') != "Sunday") {
+        if (day.date.isSameOrAfter(moment(),'day') && day.date.format('dddd') != "Saturday" && day.date.format('dddd') != "Sunday") {
             this.selected = day.date;
         }
     }
