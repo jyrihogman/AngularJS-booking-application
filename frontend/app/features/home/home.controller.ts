@@ -7,6 +7,8 @@ export class HomeController {
 	reservations: any;
 	Time: string;
 	Date: string;
+	firstname: string;
+	lastname: string;
 	matchPattern: RegExp;
 	
 	static $inject = ['$http'];
@@ -18,7 +20,7 @@ export class HomeController {
 			{ time: "13:00", day: "2016-05-17" },
 			{ time: "15:00", day: "2016-05-20" }	
 		];
-		this.matchPattern = new RegExp("^[a-z]");
+		this.matchPattern = new RegExp('^[A-Z]?[- a-zA-Z]');
 
 		this.httpGet.get('http://localhost:56368/api/reservation').success((data) => this.reservations = data)
 															  						   .error((data) => alert("erro"));
@@ -28,8 +30,11 @@ export class HomeController {
 		if (this.Date) {
 			let reserved = {
 				"Time": this.Time,
-				"Date": this.Date			
-				}
+				"Date": this.Date,
+				"Firstname": this.firstname,
+				"Lastname": this.lastname
+							
+				};
 			this.httpPost.post('http://localhost:56368/api/reserved', reserved).success((data) => alert("Reservation added succesfully"))
 																			   .error((data) => alert("erro"));
 			}

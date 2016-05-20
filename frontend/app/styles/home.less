@@ -39,6 +39,14 @@ calendar { float:left; display:block; .border-box; background:white; border:soli
     }
 }
 
+input {
+.ng-pristine { border:1px solid Gold; };
+.ng-dirty.ng-valid { border:1px solid Green; };
+.g-dirty.ng-invalid { border:1px solid Red; };
+.ng-dirty.ng-valid ~ span.ok { color:green; display:inline; };
+.ng-dirty.ng-invalid ~ span.ko { color:red; display:inline; };
+}
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
