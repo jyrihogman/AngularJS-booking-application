@@ -1,8 +1,8 @@
 ﻿
     <div class="header">
-        <i class="fa fa-angle-left" ng-click="$ctrl.previous()"></i>
-        <span>{{$ctrl.month.format("MMMM, YYYY")}}</span>
-        <i class="fa fa-angle-right" ng-click="$ctrl.next()"></i>
+        <i class="fa fa-angle-left" ng-click="$cal.previous()"></i>
+        <span>{{$cal.month.format("MMMM, YYYY")}}</span>
+        <i class="fa fa-angle-right" ng-click="$cal.next()"></i>
     </div>
     <div class="week names">
         <span class="day">Mon</span>
@@ -13,8 +13,8 @@
         <span class="day">Sat</span>
         <span class="day">Sun</span>
     </div>
-    <div class="week" ng-repeat="week in $ctrl.weeks">
+    <div class="week" ng-repeat="week in $cal.weeks">
         <span class="day" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, 
-                selected: day.date.isSame($ctrl.selected), BeforeToday: day.date.isBefore(moment('YYYY-MM-DD'), 'day') }" 
-                ng-click="$ctrl.select(day)" ng-repeat="day in week.days">{{day.number}}</span>
+                selected: day.date.isSame($cal.selected), BeforeToday: day.date.isBefore(moment('YYYY-MM-DD'), 'day') }" 
+                ng-click="$cal.select(day)" ng-repeat="day in week.days">{{day.number}}</span>
     </div>

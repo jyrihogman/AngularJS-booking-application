@@ -72,7 +72,7 @@ angular.module('app')
             restrict: 'EA',
             templateUrl: 'features/home/calendar/calendar.html',
             controller: CalendarController,
-            controllerAs: '$ctrl',
+            controllerAs: '$cal',
             bindToController: true,
             scope: { selected: '=' }
     }
