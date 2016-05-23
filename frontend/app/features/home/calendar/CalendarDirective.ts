@@ -69,7 +69,7 @@ export class CalendarController {
 angular.module('app')
     .directive('calendar', () => {
     return {
-            restrict: 'EA',
+            restrict: 'E',
             templateUrl: 'features/home/calendar/calendar.html',
             controller: CalendarController,
             controllerAs: '$cal',

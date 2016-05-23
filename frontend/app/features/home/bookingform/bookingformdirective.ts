@@ -3,6 +3,7 @@ export class BookingController {
 	reservations: any;
 	Time: string;
 	Date: string;
+	Email: string;
 	firstname: string;
 	lastname: string;
     matchPattern: RegExp;
@@ -19,15 +20,16 @@ export class BookingController {
 		this.http = $http;                                                                       
 	}
 	submit () {
-		if (this.Date) {
-			let reserved = {
-				"Time": this.Time,
-				"Date": this.Date,
-				"Firstname": this.firstname,
-				"Lastname": this.lastname
-							
+		if (this.Time) {
+			let reservation = {
+				"ID": this.Time + this.Date,
+				"TIME": this.Time,
+				"EMAIL": this.Email,
+				"DATE": this.Date,
+				"FIRSTNAME": this.firstname,
+				"LASTNAME": this.lastname	
 				};
-			this.http.post('http://localhost:56368/api/reserved', reserved).success((data) => alert("Reservation added succesfully"))
+			this.http.post('http://localhost:61520/api/reservations', reservation).success((data) => alert("Reservation added succesfully"))
 																			   .error((data) => alert("erro"));
 			}
 	    }
@@ -36,9 +38,9 @@ export class BookingController {
 angular.module('app')
     .directive('bookingform', () => {
     return {
-            restrict: 'EA',
+            restrict: 'E',
             templateUrl: 'features/home/bookingform/bookingform.html',
             controller: BookingController,
-            controllerAs: '$book',
+            controllerAs: '$book'
     }
 });
