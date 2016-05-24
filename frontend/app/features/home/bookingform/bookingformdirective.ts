@@ -22,15 +22,18 @@ export class BookingController {
 	submit () {
 		if (this.Time) {
 			let reservation = {
-				"ID": this.Time + this.Date,
+				"ID": "3",
 				"TIME": this.Time,
 				"EMAIL": this.Email,
 				"DATE": this.Date,
 				"FIRSTNAME": this.firstname,
-				"LASTNAME": this.lastname	
+				"LASTNAME": this.lastname,
+				"RESERVED": true
 				};
-			this.http.post('http://localhost:61520/api/reservations', reservation).success((data) => alert("Reservation added succesfully"))
-																			   .error((data) => alert("erro"));
+
+				this.http.put('http://localhost:61520/api/reservations/' + reservation.ID, reservation).success((reservation) => alert("Reservation added succesfully"))
+																						   .error((reservation) => alert("erro"));
+
 			}
 	    }
 }
