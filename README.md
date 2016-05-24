@@ -1,4 +1,4 @@
-# SAMK-student-project
+# Reservation system project
 
 ### Creating days, weeks and months
 Working fine.
