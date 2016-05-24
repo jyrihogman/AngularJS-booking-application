@@ -14,7 +14,7 @@ using System.Web.Http.Cors;
 
 namespace ErDbBackend.Controllers
 {
-    [EnableCors(origins: "http://localhost:7203", headers: "*", methods: "*")]
+    [EnableCorsAttribute(origins: "*", headers: "*", methods: "*")]
     public class RESERVATIONsController : ApiController
     {
         private ErProjectEntities db = new ErProjectEntities();
@@ -22,20 +22,42 @@ namespace ErDbBackend.Controllers
         // GET: api/RESERVATIONs
         public IQueryable<RESERVATION> GetRESERVATIONs()
         {
-                return db.RESERVATIONs;
+            //using (var context = new ErProjectEntities())
+            //{
+            //    // Query for all blogs with names starting with B 
+            //    var blogs = from b in context.RESERVATIONs
+            //                where b.RESERVED == null
+            //                select b;
+            //    return db.RESERVATIONs;
+
+            //}
+
+            return db.RESERVATIONs;
 
         }
+
 
         // GET: api/RESERVATIONs/5
         [ResponseType(typeof(RESERVATION))]
         public async Task<IHttpActionResult> GetRESERVATION(string id)
         {
+            //if(id == "true")
+            //{
+            //    var c = await (from r in db.RESERVATIONs where r.RESERVED == true select r).ToListAsync();
+            //    return Ok(c);
+            //}
+            //else
+            //{
+            //    var c = await (from r in db.RESERVATIONs where r.RESERVED == false select r).ToListAsync();
+            //    return Ok(c);
+            //}
+
             RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
             if (rESERVATION == null)
             {
                 return NotFound();
             }
-                return Ok(rESERVATION);
+            return Ok(rESERVATION);
         }
 
         // PUT: api/RESERVATIONs/5

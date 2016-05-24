@@ -20,5 +20,6 @@ namespace ErDbBackend.Models
         public string LASTNAME { get; set; }
         public string TIME { get; set; }
         public string DATE { get; set; }
+        public Nullable<bool> RESERVED { get; set; }
     }
 }
