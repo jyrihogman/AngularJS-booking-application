@@ -1,5 +1,5 @@
 export class HomeController {
-	reservations: any;
+	reservations = [];
 	
 	static $inject = ['$http'];
 	constructor ($http) {	

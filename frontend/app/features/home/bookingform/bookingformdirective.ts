@@ -2,6 +2,7 @@ export class BookingController {
     messages: any[];
 	reservations: any;
 	Time: string;
+	Id: string;
 	Date: string;
 	Email: string;
 	firstname: string;
@@ -11,18 +12,13 @@ export class BookingController {
     
     static $inject = ['$http'];
 	constructor ( $http ) {
-		// this.messages = [ 
-		// 	{ time: "16:00", day: "2016-05-17" },
-		// 	{ time: "13:00", day: "2016-05-17" },
-		// 	{ time: "15:00", day: "2016-05-20" }	
-		// ];
-		this.matchPattern = new RegExp('^[A-Z]?[- a-zA-Z]');
-		this.http = $http;                                                                       
+		this.matchPattern = new RegExp('^[A-Za-z]+[- a-zA-Z]');
+		this.http = $http;
 	}
 	submit () {
-		if (this.Time) {
+		if (this.Date) {
 			let reservation = {
-				"ID": "5",
+				"ID": "8",
 				"TIME": this.Time,
 				"EMAIL": this.Email,
 				"DATE": this.Date,
