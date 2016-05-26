@@ -19,6 +19,15 @@ namespace ErDbBackend
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "ApiByName",
+                routeTemplate: "api/{controller}/{action}/{status}",
+                defaults: null,
+                constraints: new { status = @"^[a-z]+$" }
+            );
+
+
         }
     }
 }

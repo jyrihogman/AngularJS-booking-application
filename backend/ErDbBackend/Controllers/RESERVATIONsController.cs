@@ -19,39 +19,17 @@ namespace ErDbBackend.Controllers
     {
         private ErProjectEntities db = new ErProjectEntities();
 
-        // GET: api/RESERVATIONs
-        public IQueryable<RESERVATION> GetRESERVATIONs()
+        // GET: api/Reservations
+        public IQueryable<RESERVATION> GetAllReservations()
         {
-            //using (var context = new ErProjectEntities())
-            //{
-            //    // Query for all blogs with names starting with B 
-            //    var blogs = from b in context.RESERVATIONs
-            //                where b.RESERVED == null
-            //                select b;
-            //    return db.RESERVATIONs;
-
-            //}
-
-            return db.RESERVATIONs;
-
+                return db.RESERVATIONs;
         }
 
 
-        // GET: api/RESERVATIONs/5
+        // GET: api/Reservations/5
         [ResponseType(typeof(RESERVATION))]
-        public async Task<IHttpActionResult> GetRESERVATION(string id)
+        public async Task<IHttpActionResult> GetReservationById(string id)
         {
-            //if(id == "true")
-            //{
-            //    var c = await (from r in db.RESERVATIONs where r.RESERVED == true select r).ToListAsync();
-            //    return Ok(c);
-            //}
-            //else
-            //{
-            //    var c = await (from r in db.RESERVATIONs where r.RESERVED == false select r).ToListAsync();
-            //    return Ok(c);
-            //}
-
             RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
             if (rESERVATION == null)
             {
@@ -60,9 +38,25 @@ namespace ErDbBackend.Controllers
             return Ok(rESERVATION);
         }
 
-        // PUT: api/RESERVATIONs/5
+        // GET: api/Reservations/status/true
+        [ActionName("status")]
+        public async Task<IHttpActionResult> GetReservationByStatus(string status)
+        {
+            if (status == "true")
+            {
+                var c = await (from r in db.RESERVATIONs where r.RESERVED == true select r).ToListAsync();
+                return Ok(c);
+            }
+            else
+            {
+                var c = await (from r in db.RESERVATIONs where r.RESERVED == false select r).ToListAsync();
+                return Ok(c);
+            }
+        }
+
+        // PUT: api/Reservations/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutRESERVATION(string id, RESERVATION rESERVATION)
+        public async Task<IHttpActionResult> PutReservation(string id, RESERVATION rESERVATION)
         {
             if (!ModelState.IsValid)
             {
@@ -95,9 +89,9 @@ namespace ErDbBackend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/RESERVATIONs
+        // POST: api/Reservations
         [ResponseType(typeof(RESERVATION))]
-        public async Task<IHttpActionResult> PostRESERVATION(RESERVATION rESERVATION)
+        public async Task<IHttpActionResult> PostReservation(RESERVATION rESERVATION)
         {
             if (!ModelState.IsValid)
             {
@@ -125,9 +119,9 @@ namespace ErDbBackend.Controllers
             return CreatedAtRoute("DefaultApi", new { id = rESERVATION.ID }, rESERVATION);
         }
 
-        // DELETE: api/RESERVATIONs/5
+        // DELETE: api/Reservations/5
         [ResponseType(typeof(RESERVATION))]
-        public async Task<IHttpActionResult> DeleteRESERVATION(string id)
+        public async Task<IHttpActionResult> DeleteReservation(string id)
         {
             RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
             if (rESERVATION == null)
