@@ -9,20 +9,23 @@ export class BookingController {
 	lastname: string;
     matchPattern: RegExp;
 	http: ng.IHttpService;
+	a: string;
     
     static $inject = ['$http'];
 	constructor ( $http ) {
-		this.matchPattern = new RegExp('^[A-Za-z]+[- a-zA-Z]');
+
 		this.http = $http;
+		// this.matchPattern = new RegExp('^[^\\d &\/\\#,+()$~%.:;_*?<>{} ]+[^\\d &\/\\#,+()$~%.:;_*?<>{} ]$', '') 
 	}
 	submit () {
+		this.a = this.firstname.replace(/[&\/\\#,+()$~%.:;_^*?<>{} ]/g, '');
 		if (this.Date) {
 			let reservation = {
-				"ID": "8",
+				"ID": "14",
 				"TIME": this.Time,
 				"EMAIL": this.Email,
 				"DATE": this.Date,
-				"FIRSTNAME": this.firstname,
+				"FIRSTNAME": this.a,
 				"LASTNAME": this.lastname,
 				"RESERVED": true
 				};
