@@ -47,10 +47,14 @@ namespace ErDbBackend.Controllers
                 var c = await (from r in db.RESERVATIONs where r.RESERVED == true select r).ToListAsync();
                 return Ok(c);
             }
-            else
+            else if (status == "false")
             {
                 var c = await (from r in db.RESERVATIONs where r.RESERVED == false select r).ToListAsync();
                 return Ok(c);
+            }
+            else
+            {
+                return NotFound();
             }
         }
 
