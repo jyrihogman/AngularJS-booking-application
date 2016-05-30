@@ -8,6 +8,7 @@ export class BookingController {
 	firstname: string;
 	lastname: string;
     matchPattern: RegExp;
+	emailPattern: RegExp;
 	http: ng.IHttpService;
 	a: string;
 	b: string;
@@ -16,12 +17,13 @@ export class BookingController {
 	constructor ( $http ) {
 
 		this.http = $http;
-		this.matchPattern = new RegExp('^[^\\d &\/\\#,+()$~%.:;_*?<>{} ]+[^\\d &\/\\#,+()$~%.:;_*?<>{} ]$', '');
+		this.matchPattern = new RegExp('^[^\\d &\/\\#,+()$~%.:;_*?<>{} ]+[^\\d &\/\\#,+()$~%.:;_*?<>{} ]$');
+		this.emailPattern = new RegExp('[^\\d &\/\\#,+()$~%.:;_*?<>{} ]$');
 	}
 	submit () {
 		this.a = this.firstname.replace(/[&\/\\#,+()$~%.:;_^*?<>{} ]/g, '');
 		this.b = this.lastname.replace(/[&\/\\#,+()$~%.:;_^*?<>{} ]/g, '');
-		if (this.Id) {
+		if (this.Id && this.Email, this.a, this.b) {
 			let reservation = {
 				"ID": this.Id,
 				"EMAIL": this.Email,

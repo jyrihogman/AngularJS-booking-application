@@ -4,29 +4,30 @@
                     <div class="form-group">
                     <label for="select" class="col-lg-2 control-label">Time</label>
                     <div class="col-lg-10">
-                      <select class="form-control" id="select" ng-model="$book.Id">
-                        <option value="">Choose here</option>
-                        <option value="{{reservation.ID}}" ng-repeat="reservation in home.reservations | filter:{DATE: day.format('YYYY-MM-DD')} ">{{ reservation.TIME }}</option>
+                      <select class="form-control" id="select" ng-model="$book.Id" required>
+                        <option value="" ng-show="!home.reservations.length">Nothing available</option>
+                        <option value="" ng-show="home.reservations.length">Choose here</option>
+                        <option value="{{reservation.ID}}" ng-repeat="reservation in home.reservations | filter:{DATE: day.format('YYYY-MM-DD')}" ng-selected selected>{{ reservation.TIME }}</option>
                       </select>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                     <div class="col-lg-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="$book.Email">
+                      <input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="$book.Email" ng-pattern="$book.matchPattern" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-lg-2 control-label">Name</label>
                     <div class="col-lg-10">
-                      <input type="name" class="form-control" name="inputName" placeholder="First name" ng-model="$book.firstname" ng-pattern="$book.matchPattern">
+                      <input type="name" class="form-control" name="firstname" placeholder="First name" ng-model="$book.firstname" ng-pattern="$book.matchPattern" required>
                       <br>
-                      <input type="name" class="form-control" name="inputName" placeholder="Last name" ng-model="$book.lastname" ng-pattern="$book.matchPattern">
+                      <input type="name" class="form-control" name="lastname" placeholder="Last name" ng-model="$book.lastname" ng-pattern="$book.matchPattern" required>
                     </div>
                   </div>
                      <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
-                      <button type="submit" class="btn btn-primary" ng-click="$book.submit()">Submit</button>
+                      <button type="submit" class="btn btn-primary" ng-click="$book.submit()" ng-disabled="BookingForm.$invalid">Submit</button>
                       <button type="reset" class="btn btn-default">Clear</button>
                     </div>
                   </div>
