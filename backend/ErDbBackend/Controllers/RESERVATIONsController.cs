@@ -84,7 +84,6 @@ namespace ErDbBackend.Controllers
                 }
 
                 RESERVATION reservation = db.RESERVATIONs.SingleOrDefault(i => i.ID == id);
-
                 if (reservation.RESERVED == false)
                 {
                     reservation.EMAIL = r.EMAIL;
@@ -110,12 +109,9 @@ namespace ErDbBackend.Controllers
                             throw;
                         }
                     }
-                    return StatusCode(HttpStatusCode.NoContent);
+                    return StatusCode(HttpStatusCode.NoContent); 
                 }
-                else
-                {
-                    return NotFound();
-                }
+                return BadRequest();
             }
         }
 
