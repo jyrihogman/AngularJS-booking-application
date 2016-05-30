@@ -13,10 +13,10 @@ namespace ErDbBackend.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ErProjectEntities : DbContext
+    public partial class CalendarProjectEntities : DbContext
     {
-        public ErProjectEntities()
-            : base("name=ErProjectEntities")
+        public CalendarProjectEntities()
+            : base("name=CalendarProjectEntities")
         {
         }
     

@@ -20,7 +20,7 @@ namespace ErDbBackend.Controllers
         // GET: api/Reservations
         public async Task<IHttpActionResult> GetAllReservations()
         {
-            using (var db = new ErProjectEntities())
+            using (var db = new CalendarProjectEntities())
             {
                 var c = await(from r in db.RESERVATIONs select r).ToListAsync();
                 return Ok(c);
@@ -31,9 +31,9 @@ namespace ErDbBackend.Controllers
 
         // GET: api/Reservations/5
         [ResponseType(typeof(RESERVATION))]
-        public async Task<IHttpActionResult> GetReservationById(string id)
+        public async Task<IHttpActionResult> GetReservationById(int id)
         {
-            using (var db = new ErProjectEntities())
+            using (var db = new CalendarProjectEntities())
             {
                 RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
                 if (rESERVATION == null)
@@ -48,7 +48,7 @@ namespace ErDbBackend.Controllers
         [ActionName("status")]
         public async Task<IHttpActionResult> GetReservationByStatus(bool status)
         {
-            using (var db = new ErProjectEntities())
+            using (var db = new CalendarProjectEntities())
             {
                 if (status == true)
                 {
@@ -69,9 +69,9 @@ namespace ErDbBackend.Controllers
 
         // PUT: api/Reservations/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutReservation(string id, ReservationDTO r)
+        public async Task<IHttpActionResult> PutReservation(int id, ReservationDTO r)
         {
-            using (var db = new ErProjectEntities())
+            using (var db = new CalendarProjectEntities())
             {
                 if (!ModelState.IsValid)
                 {
@@ -84,31 +84,38 @@ namespace ErDbBackend.Controllers
                 }
 
                 RESERVATION reservation = db.RESERVATIONs.SingleOrDefault(i => i.ID == id);
-                reservation.EMAIL = r.EMAIL;
-                reservation.FIRSTNAME = r.FIRSTNAME;
-                reservation.LASTNAME = r.LASTNAME;
-                reservation.RESERVED = r.RESERVED;
 
-
-                db.Entry(reservation).State = EntityState.Modified;
-
-                try
+                if (reservation.RESERVED == false)
                 {
-                    await db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RESERVATIONExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                    reservation.EMAIL = r.EMAIL;
+                    reservation.FIRSTNAME = r.FIRSTNAME;
+                    reservation.LASTNAME = r.LASTNAME;
+                    reservation.RESERVED = r.RESERVED;
 
-                return StatusCode(HttpStatusCode.NoContent); 
+                    db.Entry(reservation).State = EntityState.Modified;
+
+
+                    try
+                    {
+                        await db.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!RESERVATIONExists(id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
         }
 
@@ -116,7 +123,7 @@ namespace ErDbBackend.Controllers
         [ResponseType(typeof(RESERVATION))]
         public async Task<IHttpActionResult> PostReservation(RESERVATION rESERVATION)
         {
-            using (var db = new ErProjectEntities())
+            using (var db = new CalendarProjectEntities())
             {
                 if (!ModelState.IsValid)
                 {
@@ -149,7 +156,7 @@ namespace ErDbBackend.Controllers
         [ResponseType(typeof(RESERVATION))]
         public async Task<IHttpActionResult> DeleteReservation(string id)
         {
-            using (var db = new ErProjectEntities())
+            using (var db = new CalendarProjectEntities())
             {
                 RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
                 if (rESERVATION == null)
@@ -166,7 +173,7 @@ namespace ErDbBackend.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            using (var db = new ErProjectEntities())
+            using (var db = new CalendarProjectEntities())
             {
                 if (disposing)
                 {
@@ -176,9 +183,9 @@ namespace ErDbBackend.Controllers
             }
         } 
 
-        private bool RESERVATIONExists(string id)
+        private bool RESERVATIONExists(int id)
         {
-            using (var db = new ErProjectEntities())
+            using (var db = new CalendarProjectEntities())
             {
                 return db.RESERVATIONs.Count(e => e.ID == id) > 0; 
             }

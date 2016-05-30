@@ -12,21 +12,24 @@ namespace ErDbBackend.Controllers
     [EnableCorsAttribute(origins: "*", headers: "*", methods: "*")]
     public class StatusController : ApiController
     {
-        private ErProjectEntities db = new ErProjectEntities();
+        private CalendarProjectEntities db = new CalendarProjectEntities();
 
         // GET: api/Status/5
         [ResponseType(typeof(RESERVATION))]
-        public async Task<IHttpActionResult> GetReservation(string id)
+        public async Task<IHttpActionResult> GetReservation(bool id)
         {
-            if (id == "true")
+            using (var db = new CalendarProjectEntities())
             {
-                var c = await (from r in db.RESERVATIONs where r.RESERVED == true select r).ToListAsync();
-                return Ok(c);
-            }
-            else
-            {
-                var c = await (from r in db.RESERVATIONs where r.RESERVED == false select r).ToListAsync();
-                return Ok(c);
+                if (id == true)
+                {
+                    var c = await (from r in db.RESERVATIONs where r.RESERVED == true select r).ToListAsync();
+                    return Ok(c);
+                }
+                else
+                {
+                    var c = await (from r in db.RESERVATIONs where r.RESERVED == false select r).ToListAsync();
+                    return Ok(c);
+                }
             }
         }
     }
