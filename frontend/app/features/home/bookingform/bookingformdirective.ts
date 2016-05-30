@@ -20,7 +20,7 @@ export class BookingController {
 	}
 	submit () {
 		this.a = this.firstname.replace(/[&\/\\#,+()$~%.:;_^*?<>{} ]/g, '');
-		this.b = this.firstname.replace(/[&\/\\#,+()$~%.:;_^*?<>{} ]/g, '');
+		this.b = this.lastname.replace(/[&\/\\#,+()$~%.:;_^*?<>{} ]/g, '');
 		if (this.Id) {
 			let reservation = {
 				"ID": this.Id,
