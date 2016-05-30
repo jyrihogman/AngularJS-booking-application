@@ -17,12 +17,15 @@ namespace ErDbBackend.Controllers
     [EnableCorsAttribute(origins: "*", headers: "*", methods: "*")]
     public class RESERVATIONsController : ApiController
     {
-        private ErProjectEntities db = new ErProjectEntities();
-
         // GET: api/Reservations
-        public IQueryable<RESERVATION> GetAllReservations()
+        public async Task<IHttpActionResult> GetAllReservations()
         {
-                return db.RESERVATIONs;
+            using (var db = new ErProjectEntities())
+            {
+                var c = await(from r in db.RESERVATIONs select r).ToListAsync();
+                return Ok(c);
+            }
+            //return db.RESERVATIONs;
         }
 
 
@@ -30,127 +33,155 @@ namespace ErDbBackend.Controllers
         [ResponseType(typeof(RESERVATION))]
         public async Task<IHttpActionResult> GetReservationById(string id)
         {
-            RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
-            if (rESERVATION == null)
+            using (var db = new ErProjectEntities())
             {
-                return NotFound();
+                RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
+                if (rESERVATION == null)
+                {
+                    return NotFound();
+                }
+                return Ok(rESERVATION); 
             }
-            return Ok(rESERVATION);
         }
 
         // GET: api/Reservations/status/true
         [ActionName("status")]
-        public async Task<IHttpActionResult> GetReservationByStatus(string status)
+        public async Task<IHttpActionResult> GetReservationByStatus(bool status)
         {
-            if (status == "true")
+            using (var db = new ErProjectEntities())
             {
-                var c = await (from r in db.RESERVATIONs where r.RESERVED == true select r).ToListAsync();
-                return Ok(c);
-            }
-            else if (status == "false")
-            {
-                var c = await (from r in db.RESERVATIONs where r.RESERVED == false select r).ToListAsync();
-                return Ok(c);
-            }
-            else
-            {
-                return NotFound();
+                if (status == true)
+                {
+                    var c = await (from r in db.RESERVATIONs where r.RESERVED == true select r).ToListAsync();
+                    return Ok(c);
+                }
+                else if (status == false)
+                {
+                    var c = await (from r in db.RESERVATIONs where r.RESERVED == false select r).ToListAsync();
+                    return Ok(c);
+                }
+                else
+                {
+                    return NotFound();
+                } 
             }
         }
 
         // PUT: api/Reservations/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutReservation(string id, RESERVATION rESERVATION)
+        public async Task<IHttpActionResult> PutReservation(string id, ReservationDTO r)
         {
-            if (!ModelState.IsValid)
+            using (var db = new ErProjectEntities())
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != rESERVATION.ID)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(rESERVATION).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RESERVATIONExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != r.ID)
+                {
+                    return BadRequest();
+                }
+
+                RESERVATION reservation = db.RESERVATIONs.SingleOrDefault(i => i.ID == id);
+                reservation.EMAIL = r.EMAIL;
+                reservation.FIRSTNAME = r.FIRSTNAME;
+                reservation.LASTNAME = r.LASTNAME;
+                reservation.RESERVED = r.RESERVED;
+
+
+                db.Entry(reservation).State = EntityState.Modified;
+
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RESERVATIONExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent); 
+            }
         }
 
         // POST: api/Reservations
         [ResponseType(typeof(RESERVATION))]
         public async Task<IHttpActionResult> PostReservation(RESERVATION rESERVATION)
         {
-            if (!ModelState.IsValid)
+            using (var db = new ErProjectEntities())
             {
-                return BadRequest(ModelState);
-            }
-
-            db.RESERVATIONs.Add(rESERVATION);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (RESERVATIONExists(rESERVATION.ID))
+                if (!ModelState.IsValid)
                 {
-                    return Conflict();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return CreatedAtRoute("DefaultApi", new { id = rESERVATION.ID }, rESERVATION);
+                db.RESERVATIONs.Add(rESERVATION);
+
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    if (RESERVATIONExists(rESERVATION.ID))
+                    {
+                        return Conflict();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return CreatedAtRoute("DefaultApi", new { id = rESERVATION.ID }, rESERVATION); 
+            }
         }
 
         // DELETE: api/Reservations/5
         [ResponseType(typeof(RESERVATION))]
         public async Task<IHttpActionResult> DeleteReservation(string id)
         {
-            RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
-            if (rESERVATION == null)
+            using (var db = new ErProjectEntities())
             {
-                return NotFound();
+                RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
+                if (rESERVATION == null)
+                {
+                    return NotFound();
+                }
+
+                db.RESERVATIONs.Remove(rESERVATION);
+                await db.SaveChangesAsync();
+
+                return Ok(rESERVATION); 
             }
-
-            db.RESERVATIONs.Remove(rESERVATION);
-            await db.SaveChangesAsync();
-
-            return Ok(rESERVATION);
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            using (var db = new ErProjectEntities())
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing); 
             }
-            base.Dispose(disposing);
-        }
+        } 
 
         private bool RESERVATIONExists(string id)
         {
-            return db.RESERVATIONs.Count(e => e.ID == id) > 0;
+            using (var db = new ErProjectEntities())
+            {
+                return db.RESERVATIONs.Count(e => e.ID == id) > 0; 
+            }
         }
     }
 }
