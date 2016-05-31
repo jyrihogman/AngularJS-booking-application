@@ -1,10 +1,11 @@
 # Reservation system project
 
-### Creating days, weeks and months
-Working fine.
+### Backend setup
+Start the project in Visual Studio and press F5
 
-### Selecting days
-Working fine, in the latest version you can't select days before today.
+### Frontend setup
+run npm install, gulp fonts & npm start
 
-### ToDo
-Backend functionality, checks for available reservations
+### Database setup
+local database instance name set up as "localhost", change if it's not correct.
+-> run SQLbatch.cmd
