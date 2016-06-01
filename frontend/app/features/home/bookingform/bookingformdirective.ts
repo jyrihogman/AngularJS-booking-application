@@ -1,6 +1,5 @@
 export class BookingController {
     messages: any[];
-	reservations: any;
 	Time: string;
 	Id: any;
 	Date: string;
@@ -13,7 +12,6 @@ export class BookingController {
     
     static $inject = ['$http'];
 	constructor ( $http ) {
-
 		this.http = $http;
 		this.matchPattern = new RegExp('^[^\\d &\/\\#,+()$~%.:;_*?<>{} ]+[^\\d &\/\\#,+()$~%.:;_*?<>{} ]$');
 		this.emailPattern = new RegExp('[^\d &\/\\#,+()$~%:;_*?<>{} .0-9]$');
@@ -28,7 +26,7 @@ export class BookingController {
 				"RESERVED": true
 				};
 
-				this.http.put('http://localhost:61520/api/reservations/' + reservation.ID, reservation).then((reservation) => alert("Reservation added succesfully"))
+				this.http.put('/api/reservations/' + reservation.ID, reservation).then((reservation) => alert("Reservation added succesfully"))
 																									   .catch((reservation) => alert("erro"));
 			}
 	    }

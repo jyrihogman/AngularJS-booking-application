@@ -5,6 +5,7 @@ var logger = require('morgan');
 var express = require('express');
 var http    = require('http');
 var gutil   = require('gulp-util');
+var proxy = require('http-proxy-middleware')
 
 
 // use SET NODE_ENV=development/build in console.
@@ -12,6 +13,8 @@ var port = process.env.PORT || 7203;
 var environment = process.env.NODE_ENV;
 
 var app = express();
+app.use('/api', proxy({target: 'http://localhost:61520'}));
+
 
 // log all requests to the console
 app.use(logger('dev'));

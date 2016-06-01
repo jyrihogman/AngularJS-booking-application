@@ -5,16 +5,15 @@
                     <label for="select" class="col-lg-2 control-label">Time</label>
                     <div class="col-lg-10">
                       <select class="form-control" id="select" ng-model="$book.Id" required>
-                        <option value="" ng-show="!home.reservations.length">Nothing available</option>
-                        <option value="" ng-show="home.reservations.length">Choose here</option>
-                        <option value="{{reservation.ID}}" ng-repeat="reservation in home.reservations | filter:{DATE: day.format('YYYY-MM-DD')}" ng-selected selected>{{ reservation.TIME }}</option>
+                        <option value="" selected>Choose here</option>
+                        <option value="{{reservation.ID}}" ng-repeat="reservation in home.reservations | filter:{DATE: day.format('YYYY-MM-DD')}">{{ reservation.TIME }}</option>
                       </select>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                     <div class="col-lg-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="$book.Email" ng-pattern="$book.matchPattern" required>
+                      <input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="$book.Email" ng-pattern="$book.emailPattern" required>
                     </div>
                   </div>
                   <div class="form-group">
