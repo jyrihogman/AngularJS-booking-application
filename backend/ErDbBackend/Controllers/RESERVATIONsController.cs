@@ -14,177 +14,73 @@ using System.Web.Http.Cors;
 
 namespace ErDbBackend.Controllers
 {
-    [EnableCorsAttribute(origins: "*", headers: "*", methods: "*")]
-    public class RESERVATIONsController : ApiController
+    public class ReservationsController : ApiController
     {
         // GET: api/Reservations
-        public async Task<IHttpActionResult> GetAllReservations()
+        public async Task<IEnumerable<ReservationContainerDTO>> GetAllReservations() 
         {
             using (var db = new CalendarProjectEntities())
             {
-                var c = await(from r in db.RESERVATIONs select r).ToListAsync();
-                return Ok(c);
-            }
-            //return db.RESERVATIONs;
-        }
+                var c = await (from reservation in db.RESERVATIONs
+                               group reservation by reservation.DATE into reservationGroup
+                               select reservationGroup).ToListAsync();
 
-
-        // GET: api/Reservations/5
-        [ResponseType(typeof(RESERVATION))]
-        public async Task<IHttpActionResult> GetReservationById(int id)
-        {
-            using (var db = new CalendarProjectEntities())
-            {
-                RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
-                if (rESERVATION == null)
-                {
-                    return NotFound();
-                }
-                return Ok(rESERVATION); 
+                return c.Select(group => new ReservationContainerDTO {
+                    Date = group.Key,
+                    Reservations = group.Select(r => new ReservationDTO {
+                        Date = r.DATE,
+                        Email = r.EMAIL,
+                        Firstname = r.FIRSTNAME,
+                        Lastname = r.LASTNAME,
+                        Reserved = r.RESERVED,
+                        Time = r.TIME,
+                        Id = r.ID })
+                });
             }
         }
 
-        // GET: api/Reservations/status/true
-        [ActionName("status")]
-        public async Task<IHttpActionResult> GetReservationByStatus(bool status)
-        {
-            using (var db = new CalendarProjectEntities())
-            {
-                if (status == true)
-                {
-                    var c = await (from r in db.RESERVATIONs where r.RESERVED == true select r).ToListAsync();
-                    return Ok(c);
-                }
-                else if (status == false)
-                {
-                    var c = await (from r in db.RESERVATIONs where r.RESERVED == false select r).ToListAsync();
-                    return Ok(c);
-                }
-                else
-                {
-                    return NotFound();
-                } 
-            }
-        }
 
         // PUT: api/Reservations/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutReservation(int id, ReservationDTO r)
+        [HttpPut]
+        public async Task<IHttpActionResult> SaveReservation(int id, ReservationDTO r)
         {
             using (var db = new CalendarProjectEntities())
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                if (id != r.ID)
+                if (id != r.Id)
                 {
                     return BadRequest();
                 }
 
-                RESERVATION reservation = db.RESERVATIONs.SingleOrDefault(i => i.ID == id);
-                if (reservation.RESERVED == false)
-                {
-                    reservation.EMAIL = r.EMAIL;
-                    reservation.FIRSTNAME = r.FIRSTNAME;
-                    reservation.LASTNAME = r.LASTNAME;
-                    reservation.RESERVED = r.RESERVED;
+                RESERVATION reservation = db.RESERVATIONs.FirstOrDefault(i => i.ID == id);
 
-                    db.Entry(reservation).State = EntityState.Modified;
+                if (reservation.RESERVED)
+                    return BadRequest();
+ 
+                reservation.EMAIL = r.Email;
+                reservation.FIRSTNAME = r.Firstname;
+                reservation.LASTNAME = r.Lastname;
+                reservation.RESERVED = r.Reserved;
 
-
-                    try
-                    {
-                        await db.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!RESERVATIONExists(id))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
-                    return StatusCode(HttpStatusCode.NoContent); 
-                }
-                return BadRequest();
-            }
-        }
-
-        // POST: api/Reservations
-        [ResponseType(typeof(RESERVATION))]
-        public async Task<IHttpActionResult> PostReservation(RESERVATION rESERVATION)
-        {
-            using (var db = new CalendarProjectEntities())
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                db.RESERVATIONs.Add(rESERVATION);
+                db.Entry(reservation).State = EntityState.Modified;
 
                 try
                 {
                     await db.SaveChangesAsync();
                 }
-                catch (DbUpdateException)
+                catch (DbUpdateConcurrencyException)
                 {
-                    if (RESERVATIONExists(rESERVATION.ID))
+                    if (db.RESERVATIONs.Count(e => e.ID == id) > 0)
                     {
-                        return Conflict();
+                        return NotFound();
                     }
                     else
                     {
                         throw;
                     }
                 }
+                return StatusCode(HttpStatusCode.NoContent);
 
-                return CreatedAtRoute("DefaultApi", new { id = rESERVATION.ID }, rESERVATION); 
-            }
-        }
-
-        // DELETE: api/Reservations/5
-        [ResponseType(typeof(RESERVATION))]
-        public async Task<IHttpActionResult> DeleteReservation(string id)
-        {
-            using (var db = new CalendarProjectEntities())
-            {
-                RESERVATION rESERVATION = await db.RESERVATIONs.FindAsync(id);
-                if (rESERVATION == null)
-                {
-                    return NotFound();
                 }
-
-                db.RESERVATIONs.Remove(rESERVATION);
-                await db.SaveChangesAsync();
-
-                return Ok(rESERVATION); 
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            using (var db = new CalendarProjectEntities())
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-                base.Dispose(disposing); 
-            }
-        } 
-
-        private bool RESERVATIONExists(int id)
-        {
-            using (var db = new CalendarProjectEntities())
-            {
-                return db.RESERVATIONs.Count(e => e.ID == id) > 0; 
-            }
         }
     }
 }

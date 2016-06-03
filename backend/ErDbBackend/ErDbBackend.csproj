@@ -114,8 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\RESERVATIONsController.cs" />
-    <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\ReservationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -138,6 +137,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReservationModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReservationContainerDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
