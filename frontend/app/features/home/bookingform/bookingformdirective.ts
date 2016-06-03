@@ -1,14 +1,14 @@
+import { IReservationContainer, IReservation } from 'app/features/home/IReservationContainer';
+
 export class BookingController {
-    messages: any[];
-	Time: string;
-	Id: any;
-	Date: string;
-	Email: string;
-	firstname: string;
-	lastname: string;
     matchPattern: RegExp;
 	emailPattern: RegExp;
 	http: ng.IHttpService;
+	selected: IReservationContainer;
+	selectedReservation: IReservation;
+	momentDate: string;
+	errorDate: string;
+	selectedDay: moment.Moment;
     
     static $inject = ['$http'];
 	constructor ( $http ) {
@@ -16,20 +16,28 @@ export class BookingController {
 		this.matchPattern = new RegExp('^[^\\d &\/\\#,+()$~%.:;_*?<>{} ]+[^\\d &\/\\#,+()$~%.:;_*?<>{} ]$');
 		this.emailPattern = new RegExp('[^\d &\/\\#,+()$~%:;_*?<>{} .0-9]$');
 	}
-	submit () {
-		if (this.Id && this.Email, this.firstname, this.lastname) {
-			let reservation = {
-				"ID": this.Id,
-				"EMAIL": this.Email,
-				"FIRSTNAME": this.firstname,
-				"LASTNAME": this.lastname,
-				"RESERVED": true
-				};
 
-				this.http.put('/api/reservations/' + reservation.ID, reservation).then((reservation) => alert("Reservation added succesfully"))
-																									   .catch((reservation) => alert("erro"));
+	submit () {
+		if (this.selectedReservation) {
+				this.http.put('/api/reservations/' + this.selectedReservation.id, this.selectedReservation).then((reservation) => alert('Reservation added succesfully'))
+																									   .catch((reservation) => alert('Error'))
 			}
 	    }
+
+	isAvailable() {
+		if (this.selected)
+		{
+			if (this.selected.reservations.filter(available => available.reserved === false).length > 0)
+				return this.selected.reservations.filter(available => available.reserved === false);
+		}
+	}
+
+	dateToMoment() {
+		if (!this.selected || this.selected.reservations.filter(available => available.reserved === false).length == 0)
+			return this.errorDate = 'Nothing available for this day.';
+
+		return this.momentDate = 'Reservations available for ' + moment(this.selected.date).format('dddd, MMMM Do YYYY');
+	}
 }
 
 angular.module('app')
@@ -38,6 +46,8 @@ angular.module('app')
             restrict: 'E',
             templateUrl: 'features/home/bookingform/bookingform.html',
             controller: BookingController,
-            controllerAs: '$book'
+            controllerAs: '$book',
+			bindToController: true,
+			scope: { selected: '=' }
     }
 });
