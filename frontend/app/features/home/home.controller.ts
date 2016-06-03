@@ -10,7 +10,7 @@ export class HomeController {
 	static $inject = ['$http'];
 	constructor($http) {
 		$http.get('/api/reservations').success((data) => this.reservationContainers = data)
-			.error((data) => alert("erro"));
+			.error((data) => alert('Error connecting to server'));
 	}
 
 	getReservationContainer(date: moment.Moment) {

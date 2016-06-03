@@ -25,7 +25,7 @@ export class BookingController {
 
 						.catch((reservation) => {
 							this.selectedReservation.reserved = false;
-							alert('Error')
+							alert('Error connecting to server');
 						});
 			}
 	    }
