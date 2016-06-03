@@ -19,8 +19,14 @@ export class BookingController {
 
 	submit () {
 		if (this.selectedReservation) {
-				this.http.put('/api/reservations/' + this.selectedReservation.id, this.selectedReservation).then((reservation) => alert('Reservation added succesfully'))
-																									   .catch((reservation) => alert('Error'))
+				this.selectedReservation.reserved = true;
+				this.http.put('/api/reservations/' + this.selectedReservation.id, this.selectedReservation)
+						.then((reservation) => alert('Reservation added succesfully'))
+
+						.catch((reservation) => {
+							this.selectedReservation.reserved = false;
+							alert('Error')
+						});
 			}
 	    }
 
