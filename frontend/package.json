@@ -35,7 +35,8 @@
     "typescript": "^1.8.9",
 	  "moment": "^2.13.0",
     "momentjs": "^1.1.6",
-    "font-awesome": "*"
+    "font-awesome": "*",
+    "http-proxy-middleware": "*"
   },
   "scripts": {
     "start": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run dev\" \"npm run express\"",

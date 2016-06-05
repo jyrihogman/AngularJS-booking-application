@@ -1,20 +1,20 @@
 ﻿
-    <div class="header">
-        <i class="fa fa-angle-left" ng-click="$cal.previous()"></i>
-        <span>{{$cal.month.format("MMMM, YYYY")}}</span>
-        <i class="fa fa-angle-right" ng-click="$cal.next()"></i>
-    </div>
-    <div class="week names">
-        <span class="day">Mon</span>
-        <span class="day">Tue</span>
-        <span class="day">Wed</span>
-        <span class="day">Thu</span>
-        <span class="day">Fri</span>
-        <span class="day">Sat</span>
-        <span class="day">Sun</span>
-    </div>
-    <div class="week" ng-repeat="week in $cal.weeks">
-        <span class="day" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, 
-                selected: day.date.isSame($cal.selected), BeforeToday: day.date.isBefore(moment('YYYY-MM-DD'), 'day') }" 
-                ng-click="$cal.select(day)" ng-repeat="day in week.days">{{day.number}}</span>
-    </div>
+<div class='header animated fadein'>
+    <i class='fa fa-angle-left animated fadein' ng-click='$cal.previous()'></i>
+    <span>{{$cal.month.format('MMMM, YYYY')}}</span>
+    <i class='fa fa-angle-right animated fadein' ng-click='$cal.next()'></i>
+</div>
+<div class='week names animated fadein'>
+    <span class='day'>Mon</span>
+    <span class='day'>Tue</span>
+    <span class='day'>Wed</span>
+    <span class='day'>Thu</span>
+    <span class='day'>Fri</span>
+    <span class='day'>Sat</span>
+    <span class='day'>Sun</span>
+</div>
+<div class='week animated fadein' ng-repeat='week in $cal.weeks'>
+    <span class='day animated fadein' ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth,
+            selected: day.date.isSame($cal.selected), beforetoday: day.date.isBefore(moment('YYYY-MM-DD'), 'day') }"
+            ng-click='$cal.select(day)' ng-repeat='day in week.days'>{{day.number}}</span>
+</div>

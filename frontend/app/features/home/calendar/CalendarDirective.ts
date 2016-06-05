@@ -13,8 +13,8 @@ export class CalendarController {
         this.buildMonth(start, this.month);
 
     }
-    
-    select(day) {     
+
+    select(day) {
         if (day.date.isSameOrAfter(moment(),'day')) {
             this.selected = day.date;
         }
@@ -50,7 +50,7 @@ export class CalendarController {
     }
     
     buildWeek(date, month) {
-        let days = [];
+        const days = [];
         for (var i = 0; i < 7; i++) {
                 days.push({
                 name: date.format('dd').substring(0, 1),
