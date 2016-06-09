@@ -8,7 +8,6 @@ export class BookingController {
 	selectedReservation: IReservation;
 	momentDate: string;
 	errorDate: string;
-	selectedDay: moment.Moment;
     
     static $inject = ['$http'];
 	constructor ( $http ) {
