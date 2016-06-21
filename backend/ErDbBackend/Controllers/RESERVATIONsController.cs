@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Description;
 using ErDbBackend.Models;
-using System.Web.Http.Cors;
 
 namespace ErDbBackend.Controllers
 {
+    [RoutePrefix("api/Reservations")]
     public class ReservationsController : ApiController
     {
         // GET: api/Reservations
+        [Route("")]
+        [HttpGet]
         public async Task<IEnumerable<ReservationContainerDTO>> GetAllReservations() 
         {
             using (var db = new CalendarProjectEntities())
@@ -41,6 +40,7 @@ namespace ErDbBackend.Controllers
 
 
         // PUT: api/Reservations/5
+        [Route("{id:int}")]
         [HttpPut]
         public async Task<IHttpActionResult> SaveReservation(int id, ReservationDTO r)
         {

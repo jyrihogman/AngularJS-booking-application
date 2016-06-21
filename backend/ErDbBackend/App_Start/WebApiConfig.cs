@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 
 namespace ErDbBackend
@@ -20,21 +17,6 @@ namespace ErDbBackend
             config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
-            config.Routes.MapHttpRoute(
-                name: "ApiByName",
-                routeTemplate: "api/{controller}/{action}/{status}",
-                defaults: null,
-                constraints: new { status = @"^[a-z]+$" }
-            );
-
-
         }
     }
 }
