@@ -3,6 +3,7 @@ import { IReservationContainer, IReservation } from 'app/features/home/IReservat
 export class BookingController {
     matchPattern: RegExp;
 	emailPattern: RegExp;
+	phonePattern: RegExp;
 	http: ng.IHttpService;
 	selected: IReservationContainer;
 	selectedReservation: IReservation;
@@ -14,6 +15,7 @@ export class BookingController {
 		this.http = $http;
 		this.matchPattern = new RegExp('^[^\\d &\/\\#,+()$~%.:;_*?<>{} ]+[^\\d &\/\\#,+()$~%.:;_*?<>{} ]$');
 		this.emailPattern = new RegExp('[^\d &\/\\#,+()$~%:;_*?<>{} .0-9]$');
+		this.phonePattern = new RegExp('[0-9+-0-9]$');
 	}
 
 	submit () {

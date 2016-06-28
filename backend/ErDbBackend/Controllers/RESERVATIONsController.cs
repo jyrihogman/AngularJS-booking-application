@@ -29,6 +29,7 @@ namespace ErDbBackend.Controllers
                     Reservations = group.Select(r => new ReservationDTO {
                         Date = r.DATE,
                         Email = r.EMAIL,
+                        Phone = r.PHONE,
                         Firstname = r.FIRSTNAME,
                         Lastname = r.LASTNAME,
                         Reserved = r.RESERVED,
@@ -57,6 +58,7 @@ namespace ErDbBackend.Controllers
                     return BadRequest();
  
                 reservation.EMAIL = r.Email;
+                reservation.PHONE = r.Phone;
                 reservation.FIRSTNAME = r.Firstname;
                 reservation.LASTNAME = r.Lastname;
                 reservation.RESERVED = r.Reserved;
