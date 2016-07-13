@@ -1,6 +1,10 @@
 .vertical-centre (@height) { height:@height; line-height:@height !important; display:inline-block; vertical-align:middle; }
 .border-box { box-sizing: border-box; -moz-box-sizing: border-box; }
 
+.modal-body {
+    font-size: 1.5em;
+}
+
 @border-colour:#CCC;
 
 calendar { float:left; display:block; .border-box; background-color:white; border:solid 1px @border-colour; margin-bottom:10px; 
@@ -51,7 +55,7 @@ calendar { float:left; display:block; .border-box; background-color:white; borde
 }
 
 select.ng-pristine { border: 3px solid Green; }
-select.ng-invalid { border: 3px solid Gold; }
+select.ng-invalid { border: 3px solid #00a3cc; }
 select.ng-valid { border: 3px solid Green; }
 input.ng-dirty.ng-valid { border: 3px solid Green; }
 input.ng-dirty.ng-invalid { border: 3px solid Red; }
