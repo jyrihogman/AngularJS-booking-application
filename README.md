@@ -9,3 +9,6 @@ Start the project in Visual Studio and press F5
 
 ### 3. Frontend setup
 run npm install & npm start
+
+# Demo:
+http://samk-er.azurewebsites.net
