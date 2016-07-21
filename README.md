@@ -1,11 +1,13 @@
 # Reservation system project
 
-### Backend setup
+### 1. Database setup
+local database server name set up as "localhost", change if it's not correct.
+-> run SQLbatch.cmd
+
+### 2. Backend setup
 Start the project in Visual Studio and press F5
 
-### Frontend setup
-run npm install, npm install http-proxy-middleware & npm start
+### 3. Frontend setup
+run npm install & npm start
 
-### Database setup
-local database instance name set up as "localhost", change if it's not correct.
--> run SQLbatch.cmd
+## [Demo](http://samk-er.azurewebsites.net)

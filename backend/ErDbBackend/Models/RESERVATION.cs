@@ -21,5 +21,6 @@ namespace ErDbBackend.Models
         public string EMAIL { get; set; }
         public string FIRSTNAME { get; set; }
         public string LASTNAME { get; set; }
+        public string PHONE { get; set; }
     }
 }
