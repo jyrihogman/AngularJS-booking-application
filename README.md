@@ -11,3 +11,5 @@ Start the project in Visual Studio and press F5
 run npm install & npm start
 
 ## [Demo](http://samk-er.azurewebsites.net)
+
+###Demo is very limited, database might not have any available reservations set.
