@@ -49,11 +49,16 @@ calendar { float:left; display:block; .border-box; background-color:white; borde
                          color:white;
             }
             &.beforetoday { color:#C0C0C0; }
+            &.notAvailable {
+                background-image: -webkit-linear-gradient(red, red 60%, red);
+                background-image: -o-linear-gradient(red, red 60%, red);
+                background-image: linear-gradient(red, red 60%, red);
+                color: white;
+            }
         }
         &.names>span { color:@secondary-colour; font-weight:bold; }
     }
 }
-
 select.ng-pristine { border: 3px solid Green; }
 select.ng-invalid { border: 3px solid #00a3cc; }
 select.ng-valid { border: 3px solid Green; }

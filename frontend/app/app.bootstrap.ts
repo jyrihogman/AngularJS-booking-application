@@ -2,7 +2,7 @@
 
 angular.module('app', [
             "ngRoute",
-    "app.templates" 
+            "app.templates"
 ]);
 
 require('templates');

@@ -1,4 +1,5 @@
-import { IReservationContainer, IReservation } from 'app/features/home/IReservationContainer';
+import { IReservationContainer, IReservation } from 'features/home/IReservationContainer';
+import { ReservationService } from 'features/home/ReservationService';
 
 export class BookingController {
     matchPattern: RegExp;
@@ -7,11 +8,12 @@ export class BookingController {
 	http: ng.IHttpService;
 	selected: IReservationContainer;
 	selectedReservation: IReservation;
+	day: moment.Moment;
 	momentDate: string;
 	errorDate: string;
     
-    static $inject = ['$http'];
-	constructor ( $http ) {
+    static $inject = ['$http', 'ReservationService'];
+	constructor (private $http, private reservationService: ReservationService) {
 		this.http = $http;
 		this.matchPattern = new RegExp('^[^\\d &\/\\#,+()$~%.:;_*?<>{} ]+[^\\d &\/\\#,+()$~%.:;_*?<>{} ]$');
 		this.emailPattern = new RegExp('[^\d &\/\\#,+()$~%:;_*?<>{} .0-9]$');
@@ -32,6 +34,7 @@ export class BookingController {
 	    }
 
 	isAvailable() {
+		this.selected = this.reservationService.getReservationContainer(this.day);
 		if (this.selected)
 		{
 			if (this.selected.reservations.filter(available => available.reserved === false).length > 0)
@@ -48,13 +51,10 @@ export class BookingController {
 }
 
 angular.module('app')
-    .directive('bookingform', () => {
-    return {
-            restrict: 'E',
-            templateUrl: 'features/home/bookingform/bookingform.html',
-            controller: BookingController,
-            controllerAs: '$book',
-			bindToController: true,
-			scope: { selected: '=' }
-    }
+	.service('ReservationService', ReservationService)
+    .component('bookingform', {
+        templateUrl: 'features/home/bookingform/bookingform.html',
+        controller: BookingController ,
+        controllerAs: '$book',
+        bindings: { day: '<' }
 });

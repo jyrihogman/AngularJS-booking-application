@@ -15,6 +15,7 @@
 </div>
 <div class='week animated fadein' ng-repeat='week in $cal.weeks'>
     <span class='day animated fadein' ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth,
-            selected: day.date.isSame($cal.selected), beforetoday: day.date.isBefore(moment('YYYY-MM-DD'), 'day') }"
+            selected: day.date.isSame($cal.selected), beforetoday: day.date.isBefore(moment('YYYY-MM-DD'), 'day'),
+            notAvailable: $cal.dateAvailability(day.date) == 0 }"
             ng-click='$cal.select(day)' ng-repeat='day in week.days'>{{day.number}}</span>
 </div>

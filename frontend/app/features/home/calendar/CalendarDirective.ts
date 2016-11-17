@@ -1,17 +1,24 @@
+import { ReservationService } from 'features/home/ReservationService';
+
 export class CalendarController {
     weeks = [];
     day: moment.Moment;
     month: moment.Moment;
     selected: moment.Moment;
     
-    constructor () {
+    static $inject = ['ReservationService'];
+	constructor (private reservationService: ReservationService) {
         this.selected = this.removeTime(this.selected || moment());
         this.month = this.selected.clone();
         const start = this.selected.clone();
         start.date(-6); // 1
         this.removeTime(start.day(1)); // 0
         this.buildMonth(start, this.month);
+    }
 
+    dateAvailability(day): number {
+        if (day.isSameOrAfter(moment(),'day') && this.reservationService.getAvailability(day) == 0)
+            return 0
     }
 
     select(day) {
@@ -67,13 +74,10 @@ export class CalendarController {
 }
 
 angular.module('app')
-    .directive('calendar', () => {
-    return {
-            restrict: 'E',
-            templateUrl: 'features/home/calendar/calendar.html',
-            controller: CalendarController,
-            controllerAs: '$cal',
-            bindToController: true,
-            scope: { selected: '=' }
-    }
+	.service('ReservationService', ReservationService)
+    .component('calendar', {
+        templateUrl: 'features/home/calendar/calendar.html',
+        controller: CalendarController,
+        controllerAs: '$cal',
+        bindings: { selected: '='}
 });

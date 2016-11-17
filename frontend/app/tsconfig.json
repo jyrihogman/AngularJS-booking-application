@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
         "module": "amd",
-        "moduleResolution":"classic",
+        "moduleResolution":"node",
         "target":"es5",
         "sourceMap": true,
         "inlineSources": true,
-        "pretty": true
+        "pretty": true,
+        "baseUrl": "."
     },
     "files": [
         "app.ts", "app.bootstrap.ts"

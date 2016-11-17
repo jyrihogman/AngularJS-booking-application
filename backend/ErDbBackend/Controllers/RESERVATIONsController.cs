@@ -27,11 +27,6 @@ namespace ErDbBackend.Controllers
                 return c.Select(group => new ReservationContainerDTO {
                     Date = group.Key,
                     Reservations = group.Select(r => new ReservationDTO {
-                        Date = r.DATE,
-                        Email = r.EMAIL,
-                        Phone = r.PHONE,
-                        Firstname = r.FIRSTNAME,
-                        Lastname = r.LASTNAME,
                         Reserved = r.RESERVED,
                         Time = r.TIME,
                         Id = r.ID })
