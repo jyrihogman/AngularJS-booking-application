@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using ErDbBackend.Models;
+using System.Net.Mail;
 
 namespace ErDbBackend.Controllers
 {
@@ -20,13 +21,14 @@ namespace ErDbBackend.Controllers
         {
             using (var db = new CalendarProjectEntities())
             {
-                var c = await (from reservation in db.RESERVATIONs
+                var c = await (from reservation in db.RESERVATIONs where reservation.RESERVED == false
                                group reservation by reservation.DATE into reservationGroup
                                select reservationGroup).ToListAsync();
 
                 return c.Select(group => new ReservationContainerDTO {
                     Date = group.Key,
                     Reservations = group.Select(r => new ReservationDTO {
+                        Date = r.DATE,
                         Reserved = r.RESERVED,
                         Time = r.TIME,
                         Id = r.ID })
